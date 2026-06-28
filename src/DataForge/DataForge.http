@@ -1,0 +1,6 @@
+@DataForge_HostAddress = http://localhost:5207
+
+GET {{DataForge_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
