@@ -1,0 +1,313 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #fafaf9;
+    color: #1a1a18;
+}
+
+.wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+}
+
+h1 {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.sub {
+    font-size: 15px;
+    color: #888;
+    margin-bottom: 2.5rem;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #e8e8e5;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.card-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 1rem;
+}
+
+label {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.drop {
+    border: 1px dashed #d0d0cc;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.drop:hover {
+    background: #f5f5f3;
+}
+
+.drop p {
+    font-size: 14px;
+    color: #999;
+}
+
+.drop span {
+    font-size: 13px;
+    color: #bbb;
+    margin-top: 4px;
+    display: block;
+}
+
+.file-name {
+    font-size: 13px;
+    color: #3a7fd4;
+    margin-top: 8px;
+    display: none;
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #e0e0dc;
+    border-radius: 7px;
+    font-size: 14px;
+    color: #1a1a18;
+    background: #fafaf9;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+input[type=text]:focus {
+    border-color: #aaa;
+}
+
+input[type=text]::placeholder {
+    color: #bbb;
+}
+
+.seg {
+    display: flex;
+    border: 1px solid #e0e0dc;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.seg button {
+    flex: 1;
+    padding: 8px;
+    font-size: 13px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #888;
+    transition: background 0.1s, color 0.1s;
+}
+
+.seg button.active {
+    background: #f0f0ed;
+    color: #1a1a18;
+    font-weight: 500;
+}
+
+.btn-run {
+    width: 100%;
+    padding: 11px;
+    font-size: 15px;
+    font-weight: 500;
+    background: #1a1a18;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 0.25rem;
+    transition: opacity 0.15s;
+}
+
+.btn-run:hover {
+    opacity: 0.85;
+}
+
+.btn-run:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.result {
+    display: none;
+    margin-top: 1.5rem;
+}
+
+.result.show {
+    display: block;
+}
+
+pre {
+    font-family: 'SF Mono', 'Fira Mono', monospace;
+    font-size: 13px;
+    color: #1a1a18;
+    background: #f5f5f3;
+    border: 1px solid #e8e8e5;
+    border-radius: 7px;
+    padding: 1rem;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.result-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 500;
+    background: #e6f4ea;
+    color: #2e7d32;
+    margin-right: 8px;
+}
+
+.badge.err {
+    background: #fce8e8;
+    color: #c62828;
+}
+
+.meta {
+    font-size: 13px;
+    color: #aaa;
+    display: inline;
+}
+
+.copy-btn {
+    font-size: 12px;
+    color: #aaa;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.copy-btn:hover {
+    color: #1a1a18;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid #e8e8e5;
+    margin: 0.75rem 0;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #111110;
+        color: #e8e8e5;
+    }
+
+    .card {
+        background: #1c1c1a;
+        border-color: #2e2e2c;
+    }
+
+    .card-title {
+        color: #555;
+    }
+
+    label {
+        color: #888;
+    }
+
+    .sub {
+        color: #666;
+    }
+
+    .drop {
+        border-color: #2e2e2c;
+    }
+
+    .drop:hover {
+        background: #222220;
+    }
+
+    .drop p {
+        color: #666;
+    }
+
+    input[type=text] {
+        background: #1c1c1a;
+        border-color: #2e2e2c;
+        color: #e8e8e5;
+    }
+
+    input[type=text]:focus {
+        border-color: #555;
+    }
+
+    .seg {
+        border-color: #2e2e2c;
+    }
+
+    .seg button.active {
+        background: #2a2a28;
+        color: #e8e8e5;
+    }
+
+    .btn-run {
+        background: #e8e8e5;
+        color: #111110;
+    }
+
+    pre {
+        background: #1c1c1a;
+        border-color: #2e2e2c;
+        color: #e8e8e5;
+    }
+
+    .badge {
+        background: #1a3a1e;
+        color: #66bb6a;
+    }
+
+    .badge.err {
+        background: #3a1a1a;
+        color: #ef5350;
+    }
+
+    .divider {
+        border-color: #2e2e2c;
+    }
+}

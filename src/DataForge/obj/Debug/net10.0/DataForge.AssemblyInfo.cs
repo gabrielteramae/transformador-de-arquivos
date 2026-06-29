@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DataForge")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3c73fcbb4e75e48d439e6c20e2e8c8e5bbef7bfa")]
 [assembly: System.Reflection.AssemblyProductAttribute("DataForge")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DataForge")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

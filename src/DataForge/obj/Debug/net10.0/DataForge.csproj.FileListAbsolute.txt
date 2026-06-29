@@ -35,3 +35,8 @@
 /Users/gabrielteramae/Documents/dataforge/src/DataForge/obj/Debug/net10.0/DataForge.pdb
 /Users/gabrielteramae/Documents/dataforge/src/DataForge/obj/Debug/net10.0/DataForge.genruntimeconfig.cache
 /Users/gabrielteramae/Documents/dataforge/src/DataForge/obj/Debug/net10.0/ref/DataForge.dll
+/Users/gabrielteramae/Documents/dataforge/src/DataForge/obj/Debug/net10.0/DataForge.sourcelink.json
+/Users/gabrielteramae/Documents/dataforge/src/DataForge/bin/Debug/net10.0/DataForge.staticwebassets.runtime.json
+/Users/gabrielteramae/Documents/dataforge/src/DataForge/obj/Debug/net10.0/compressed/1b9he415lb-{0}-fquw6qqn51-fquw6qqn51.gz
+/Users/gabrielteramae/Documents/dataforge/src/DataForge/obj/Debug/net10.0/compressed/czeenbbcfw-{0}-osi6mr7r9f-osi6mr7r9f.gz
+/Users/gabrielteramae/Documents/dataforge/src/DataForge/obj/Debug/net10.0/compressed/6tpp6wdxo2-{0}-c537lw5byf-c537lw5byf.gz
