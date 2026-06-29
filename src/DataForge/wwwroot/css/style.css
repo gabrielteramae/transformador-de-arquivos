@@ -311,3 +311,20 @@ pre {
         border-color: #2e2e2c;
     }
 }
+
+footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e8e8e5;
+}
+
+footer p {
+    font-size: 12px;
+    color: #bbb;
+}
+
+@media (prefers-color-scheme: dark) {
+    footer {
+        border-top-color: #2e2e2c;
+    }
+}
