@@ -1,13 +1,19 @@
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
 let selectedFile = null;
 let outputFormat = 'json';
 
 document.getElementById('fileInput').addEventListener('change', e => {
-    selectedFile = e.target.files[0];
-    if (selectedFile) {
-        const el = document.getElementById('fileName');
-        el.textContent = selectedFile.name;
-        el.style.display = 'block';
+    const f = e.target.files[0];
+    if (!f) return;
+    if (f.size > MAX_FILE_SIZE) {
+        alert('Arquivo muito grande. O limite é 5 MB.');
+        e.target.value = '';
+        return;
     }
+    selectedFile = f;
+    const el = document.getElementById('fileName');
+    el.textContent = f.name;
+    el.style.display = 'block';
 });
 
 const dropZone = document.getElementById('dropZone');
@@ -17,12 +23,15 @@ dropZone.addEventListener('drop', e => {
     e.preventDefault();
     dropZone.style.background = '';
     const f = e.dataTransfer.files[0];
-    if (f) {
-        selectedFile = f;
-        const el = document.getElementById('fileName');
-        el.textContent = f.name;
-        el.style.display = 'block';
+    if (!f) return;
+    if (f.size > MAX_FILE_SIZE) {
+        alert('Arquivo muito grande. O limite é 5 MB.');
+        return;
     }
+    selectedFile = f;
+    const el = document.getElementById('fileName');
+    el.textContent = f.name;
+    el.style.display = 'block';
 });
 
 document.querySelectorAll('#fmt button').forEach(btn => {
@@ -33,20 +42,55 @@ document.querySelectorAll('#fmt button').forEach(btn => {
     });
 });
 
+function validateFilter(value) {
+    if (!value) return true;
+    return /^[a-zA-Z0-9_]+\s*(=|>|<|>=|<=)\s*.+$/.test(value.trim());
+}
+
+document.getElementById('filter').addEventListener('blur', () => {
+    const val = document.getElementById('filter').value.trim();
+    const input = document.getElementById('filter');
+    const errMsg = document.getElementById('filterError');
+    if (val && !validateFilter(val)) {
+        input.classList.add('input-error');
+        errMsg.classList.add('show');
+    } else {
+        input.classList.remove('input-error');
+        errMsg.classList.remove('show');
+    }
+});
+
+document.getElementById('filter').addEventListener('input', () => {
+    const input = document.getElementById('filter');
+    const errMsg = document.getElementById('filterError');
+    input.classList.remove('input-error');
+    errMsg.classList.remove('show');
+});
+
 async function transformar() {
     if (!selectedFile) { alert('Selecione um arquivo primeiro.'); return; }
+
+    const filterVal = document.getElementById('filter').value.trim();
+    if (filterVal && !validateFilter(filterVal)) {
+        document.getElementById('filter').classList.add('input-error');
+        document.getElementById('filterError').classList.add('show');
+        document.getElementById('filter').focus();
+        return;
+    }
+
     const form = new FormData();
     form.append('file', selectedFile);
-    const filter = document.getElementById('filter').value.trim();
     const cols = document.getElementById('columns').value.trim();
     const rename = document.getElementById('rename').value.trim();
-    if (filter) form.append('filter', filter);
+    if (filterVal) form.append('filter', filterVal);
     if (cols) form.append('selectColumns', cols);
     if (rename) form.append('renameColumns', rename);
     form.append('outputFormat', outputFormat);
+
     const btn = document.querySelector('.btn-run');
     btn.textContent = 'Processando…';
     btn.disabled = true;
+
     try {
         const res = await fetch('/api/Transform', { method: 'POST', body: form });
         const data = await res.json();

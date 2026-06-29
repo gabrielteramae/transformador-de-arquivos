@@ -29,6 +29,7 @@
                 <span>CSV, JSON ou XML</span>
                 <div class="file-name" id="fileName"></div>
             </div>
+            <span class="file-limit">Tamanho máximo: 5 MB</span>
             <input type="file" id="fileInput" accept=".csv,.json,.xml" style="display:none">
         </div>
 
@@ -37,7 +38,10 @@
             <div class="row">
                 <div>
                     <label>Filtro</label>
+                    <span class="label-hint">Use campo=valor, campo&gt;valor ou campo&lt;valor</span>
                     <input type="text" id="filter" placeholder="ex: idade>18 ou status=ativo">
+                    <span class="input-error-msg" id="filterError">Sintaxe inválida. Use: campo=valor, campo&gt;valor ou
+                        campo&lt;valor</span>
                 </div>
                 <div>
                     <label>Colunas (separadas por vírgula)</label>
@@ -45,6 +49,7 @@
                 </div>
                 <div>
                     <label>Renomear colunas</label>
+                    <span class="label-hint">Use original:novo separado por vírgula</span>
                     <input type="text" id="rename" placeholder="ex: name:nome,email:correio">
                 </div>
             </div>
@@ -78,7 +83,7 @@
                             </svg>
                             copiar
                         </button>
-                        <button class="copy-btn" id="downloadBtn" onclick="baixar()">
+                        <button class="copy-btn" id="downloadBtn" onclick="baixar()" style="display:none">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
