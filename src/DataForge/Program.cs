@@ -10,7 +10,6 @@ var app = builder.Build();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();
