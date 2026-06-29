@@ -69,14 +69,25 @@
                         <span class="badge" id="statusBadge">ok</span>
                         <span class="meta" id="metaInfo"></span>
                     </div>
-                    <button class="copy-btn" onclick="copiar()">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <rect x="9" y="9" width="13" height="13" rx="2" />
-                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                        </svg>
-                        copiar
-                    </button>
+                    <div class="result-actions">
+                        <button class="copy-btn" id="copyBtn" onclick="copiar()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" />
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                            </svg>
+                            copiar
+                        </button>
+                        <button class="copy-btn" id="downloadBtn" onclick="baixar()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            baixar
+                        </button>
+                    </div>
                 </div>
                 <hr class="divider">
                 <pre id="output"></pre>
