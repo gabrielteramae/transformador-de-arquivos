@@ -15,4 +15,4 @@ COPY --from=build /out .
 ENV ASPNETCORE_URLS=http://+:8080
 EXPOSE 8080
 
-ENTRYPOINT ["dotnet", "DataForge.dll"]# force rebuild
+ENTRYPOINT ["dotnet", "DataForge.dll"]
