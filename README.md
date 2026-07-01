@@ -19,6 +19,7 @@ Converta e filtre arquivos CSV, JSON ou XML diretamente pelo browser, sem instal
 - Conversão entre formatos (CSV → JSON, JSON → XML, etc.)
 - Download do resultado
 - Modal de ajuda com exemplos de sintaxe
+- Rate limiting (10 requests/min por IP)
 
 ## Stack
 
