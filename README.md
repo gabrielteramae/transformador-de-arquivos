@@ -18,34 +18,7 @@ Converta e filtre arquivos CSV, JSON ou XML diretamente pelo browser, sem instal
 - Renomeação de colunas
 - Conversão entre formatos (CSV → JSON, JSON → XML, etc.)
 - Download do resultado
-
-## Sintaxe das transformações
-
-### Filtro
-
-Use operadores de comparação para filtrar linhas:
-
-| Operador | Exemplo        | Descrição |
-| -------- | -------------- | --------- |
-| `=`      | `status=ativo` | Igual a   |
-| `>`      | `idade>18`     | Maior que |
-| `<`      | `idade<65`     | Menor que |
-
-### Seleção de colunas
-
-Informe os nomes separados por vírgula:
-
-```
-nome,email,idade
-```
-
-### Renomear colunas
-
-Use o formato `original:novo` separado por vírgula:
-
-```
-name:nome,email:correio
-```
+- Modal de ajuda com exemplos de sintaxe
 
 ## Stack
 
@@ -53,6 +26,7 @@ name:nome,email:correio
 - Docker
 - Kubernetes (k8s/)
 - Railway
+- CI/CD via GitHub Actions
 
 ## Como rodar localmente
 
@@ -79,3 +53,33 @@ Acesse `http://localhost:5207`
 | `selectColumns` | string | Colunas separadas por vírgula (opcional) |
 | `renameColumns` | string | Mapeamento original:novo (opcional)      |
 | `outputFormat`  | string | `json`, `csv` ou `xml`                   |
+
+## Sintaxe das transformações
+
+A sintaxe completa também está disponível no modal de ajuda (`?`) dentro da própria interface.
+
+### Filtro
+
+Use operadores de comparação para filtrar linhas por qualquer coluna do arquivo:
+
+| Operador | Exemplo        | Descrição |
+| -------- | -------------- | --------- |
+| `=`      | `status=ativo` | Igual a   |
+| `>`      | `preco>100`    | Maior que |
+| `<`      | `preco<100`    | Menor que |
+
+### Seleção de colunas
+
+Informe os nomes separados por vírgula:
+
+```
+coluna1,coluna2,coluna3
+```
+
+### Renomear colunas
+
+Use o formato `original:novo` separado por vírgula:
+
+```
+nomeOriginal:nomeNovo,campo2:campo2Novo
+```
