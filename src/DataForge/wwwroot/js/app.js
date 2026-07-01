@@ -42,6 +42,18 @@ document.querySelectorAll('#fmt button').forEach(btn => {
     });
 });
 
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') fecharAjuda();
+});
+
+function abrirAjuda() {
+    document.getElementById('modalOverlay').classList.add('show');
+}
+
+function fecharAjuda() {
+    document.getElementById('modalOverlay').classList.remove('show');
+}
+
 function validateFilter(value) {
     if (!value) return true;
     return /^[a-zA-Z0-9_]+\s*(=|>|<|>=|<=)\s*.+$/.test(value.trim());

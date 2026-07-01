@@ -34,23 +34,24 @@
         </div>
 
         <div class="card">
-            <p class="card-title">Transformações</p>
+            <div class="card-title-row">
+                <p class="card-title">Transformações</p>
+                <button class="help-btn" onclick="abrirAjuda()" aria-label="Como usar">?</button>
+            </div>
             <div class="row">
                 <div>
                     <label>Filtro</label>
-                    <span class="label-hint">Use campo=valor, campo&gt;valor ou campo&lt;valor</span>
-                    <input type="text" id="filter" placeholder="ex: idade>18 ou status=ativo">
-                    <span class="input-error-msg" id="filterError">Sintaxe inválida. Use: campo=valor, campo&gt;valor ou
-                        campo&lt;valor</span>
+                    <input type="text" id="filter" autocomplete="off">
+                    <span class="input-error-msg" id="filterError">Sintaxe inválida. Clique em ? para ver
+                        exemplos.</span>
                 </div>
                 <div>
-                    <label>Colunas (separadas por vírgula)</label>
-                    <input type="text" id="columns" placeholder="ex: nome,email,idade">
+                    <label>Colunas</label>
+                    <input type="text" id="columns" autocomplete="off">
                 </div>
                 <div>
                     <label>Renomear colunas</label>
-                    <span class="label-hint">Use original:novo separado por vírgula</span>
-                    <input type="text" id="rename" placeholder="ex: name:nome,email:correio">
+                    <input type="text" id="rename" autocomplete="off">
                 </div>
             </div>
         </div>
@@ -99,6 +100,64 @@
             </div>
         </div>
     </div>
+
+    <div class="modal-overlay" id="modalOverlay" onclick="fecharAjuda()">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <p class="modal-title">Como usar as transformações</p>
+                <button class="modal-close" onclick="fecharAjuda()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <p class="modal-section-title">Filtro</p>
+                    <p class="modal-desc">Filtra as linhas do arquivo com base no valor de uma coluna.</p>
+                    <div class="modal-examples">
+                        <div class="modal-example">
+                            <code>status=ativo</code>
+                            <span>linhas onde status é "ativo"</span>
+                        </div>
+                        <div class="modal-example">
+                            <code>idade&gt;18</code>
+                            <span>linhas onde idade é maior que 18</span>
+                        </div>
+                        <div class="modal-example">
+                            <code>preco&lt;100</code>
+                            <span>linhas onde preço é menor que 100</span>
+                        </div>
+                    </div>
+                </div>
+                <hr class="modal-divider">
+                <div class="modal-section">
+                    <p class="modal-section-title">Colunas</p>
+                    <p class="modal-desc">Seleciona apenas as colunas informadas, separadas por vírgula.</p>
+                    <div class="modal-examples">
+                        <div class="modal-example">
+                            <code>nome,email,idade</code>
+                            <span>retorna só essas três colunas</span>
+                        </div>
+                    </div>
+                </div>
+                <hr class="modal-divider">
+                <div class="modal-section">
+                    <p class="modal-section-title">Renomear colunas</p>
+                    <p class="modal-desc">Renomeia colunas usando o formato <code>original:novo</code>, separados por
+                        vírgula.</p>
+                    <div class="modal-examples">
+                        <div class="modal-example">
+                            <code>name:nome,email:correio</code>
+                            <span>renomeia "name" para "nome" e "email" para "correio"</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <p>© 2026 Gabriel Teramae Chan. Todos os direitos reservados.</p>
     </footer>
