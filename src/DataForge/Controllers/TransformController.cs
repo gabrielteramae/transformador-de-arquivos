@@ -1,6 +1,7 @@
 using DataForge.Models;
 using DataForge.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace DataForge.Controllers;
 
@@ -9,7 +10,7 @@ namespace DataForge.Controllers;
 public class TransformController : ControllerBase
 {
     private readonly IFileTransformService _service;
-    private static readonly string[] AllowedExtensions = [".csv", ".json", ".xml"];
+    private static readonly string[] AllowedExtensions = [".csv", ".json", ".xml", ".xlsx"];
 
     public TransformController(IFileTransformService service)
     {
@@ -18,6 +19,7 @@ public class TransformController : ControllerBase
 
     [HttpPost]
     [Consumes("multipart/form-data")]
+    [EnableRateLimiting("transform")]
     public async Task<IActionResult> Transform(
         IFormFile file,
         [FromForm] string? filter = null,
@@ -26,11 +28,11 @@ public class TransformController : ControllerBase
         [FromForm] string outputFormat = "json")
     {
         if (file == null || file.Length == 0)
-            return BadRequest("No file provided.");
+            return BadRequest("Nenhum arquivo enviado.");
 
         var ext = Path.GetExtension(file.FileName).ToLower();
         if (!AllowedExtensions.Contains(ext))
-            return BadRequest($"Unsupported file type '{ext}'. Use: {string.Join(", ", AllowedExtensions)}");
+            return BadRequest($"Tipo de arquivo não suportado: '{ext}'. Use: {string.Join(", ", AllowedExtensions)}");
 
         var request = new TransformRequest
         {

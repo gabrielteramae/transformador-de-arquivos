@@ -20,16 +20,16 @@
 <body>
     <div class="wrap">
         <h1>Transformador de arquivos</h1>
-        <p class="sub">Converta e filtre arquivos CSV, JSON ou XML.</p>
+        <p class="sub">Converta e filtre arquivos CSV, JSON, XML ou XLSX.</p>
         <div class="card">
             <p class="card-title">Arquivo</p>
             <div class="drop" id="dropZone" onclick="document.getElementById('fileInput').click()">
                 <p>Arraste um arquivo ou clique para selecionar</p>
-                <span>CSV, JSON ou XML</span>
+                <span>CSV, JSON, XML ou XLSX</span>
                 <div class="file-name" id="fileName"></div>
             </div>
             <span class="file-limit">Tamanho máximo: 5 MB</span>
-            <input type="file" id="fileInput" accept=".csv,.json,.xml" style="display:none">
+            <input type="file" id="fileInput" accept=".csv,.json,.xml,.xlsx" style="display:none">
         </div>
         <div class="card">
             <div class="card-title-row">

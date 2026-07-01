@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Text;
 using System.Xml.Linq;
+using ClosedXML.Excel;
 using CsvHelper;
 using CsvHelper.Configuration;
 using DataForge.Models;
@@ -10,18 +11,36 @@ namespace DataForge.Services;
 
 public class FileTransformService : IFileTransformService
 {
+    private static readonly HashSet<string> AllowedExtensions = [".csv", ".json", ".xml", ".xlsx"];
+    private const long MaxFileSizeBytes = 5 * 1024 * 1024;
+
     public async Task<TransformResponse> TransformAsync(Stream fileStream, string fileName, TransformRequest request)
     {
         try
         {
             var extension = Path.GetExtension(fileName).ToLower();
 
+            if (!AllowedExtensions.Contains(extension))
+                return new TransformResponse
+                {
+                    Success = false,
+                    Error = $"Tipo de arquivo não suportado: '{extension}'. Use .csv, .json, .xml ou .xlsx."
+                };
+
+            if (fileStream.CanSeek && fileStream.Length > MaxFileSizeBytes)
+                return new TransformResponse
+                {
+                    Success = false,
+                    Error = "Arquivo muito grande. O limite é 5 MB."
+                };
+
             List<Dictionary<string, string>> rows = extension switch
             {
                 ".csv" => await ParseCsvAsync(fileStream),
                 ".json" => await ParseJsonAsync(fileStream),
                 ".xml" => await ParseXmlAsync(fileStream),
-                _ => throw new NotSupportedException($"Format '{extension}' not supported. Use .csv, .json or .xml")
+                ".xlsx" => await ParseXlsxAsync(fileStream),
+                _ => []
             };
 
             rows = ApplyFilter(rows, request.Filter);
@@ -75,7 +94,7 @@ public class FileTransformService : IFileTransformService
         using var reader = new StreamReader(stream);
         var content = await reader.ReadToEndAsync();
         var parsed = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(content);
-        return parsed ?? throw new InvalidDataException("JSON must be an array of objects.");
+        return parsed ?? throw new InvalidDataException("JSON inválido. O arquivo deve conter um array de objetos.");
     }
 
     private static Task<List<Dictionary<string, string>>> ParseXmlAsync(Stream stream)
@@ -85,6 +104,28 @@ public class FileTransformService : IFileTransformService
             .Select(el => el.Elements()
                 .ToDictionary(e => e.Name.LocalName, e => e.Value))
             .ToList() ?? [];
+
+        return Task.FromResult(rows);
+    }
+
+    private static Task<List<Dictionary<string, string>>> ParseXlsxAsync(Stream stream)
+    {
+        using var workbook = new XLWorkbook(stream);
+        var sheet = workbook.Worksheets.First();
+        var rows = new List<Dictionary<string, string>>();
+
+        var headerRow = sheet.Row(1);
+        var headers = headerRow.CellsUsed()
+            .Select(c => c.GetString().Trim())
+            .ToList();
+
+        foreach (var row in sheet.RowsUsed().Skip(1))
+        {
+            var dict = new Dictionary<string, string>();
+            for (int i = 0; i < headers.Count; i++)
+                dict[headers[i]] = row.Cell(i + 1).GetString();
+            rows.Add(dict);
+        }
 
         return Task.FromResult(rows);
     }
