@@ -8,22 +8,24 @@ API para transformação e conversão de arquivos de dados.
 
 ## Sobre
 
-Converta e filtre arquivos CSV, JSON ou XML diretamente pelo browser, sem instalar nada. Todas as transformações são encadeadas em um único request.
+Converta e filtre arquivos CSV, JSON, XML ou XLSX diretamente pelo browser, sem instalar nada. Todas as transformações são encadeadas em um único request.
 
 ## Funcionalidades
 
-- Upload de arquivos CSV, JSON e XML (até 5 MB)
+- Upload de arquivos CSV, JSON, XML e XLSX (até 5 MB)
 - Filtro de linhas por expressão
 - Seleção de colunas específicas
 - Renomeação de colunas
-- Conversão entre formatos (CSV → JSON, JSON → XML, etc.)
+- Conversão entre formatos (CSV → JSON, XLSX → XML, etc.)
 - Download do resultado
 - Modal de ajuda com exemplos de sintaxe
 - Rate limiting (10 requests/min por IP)
+- Validação de tipo e tamanho de arquivo no backend
 
 ## Stack
 
 - C# / ASP.NET Core
+- ClosedXML (suporte a XLSX)
 - Docker
 - Kubernetes (k8s/)
 - Railway
@@ -47,13 +49,13 @@ Acesse `http://localhost:5207`
 
 ### Parâmetros do POST
 
-| Campo           | Tipo   | Descrição                                |
-| --------------- | ------ | ---------------------------------------- |
-| `file`          | File   | Arquivo CSV, JSON ou XML (max 5 MB)      |
-| `filter`        | string | Expressão de filtro (opcional)           |
-| `selectColumns` | string | Colunas separadas por vírgula (opcional) |
-| `renameColumns` | string | Mapeamento original:novo (opcional)      |
-| `outputFormat`  | string | `json`, `csv` ou `xml`                   |
+| Campo           | Tipo   | Descrição                                 |
+| --------------- | ------ | ----------------------------------------- |
+| `file`          | File   | Arquivo CSV, JSON, XML ou XLSX (max 5 MB) |
+| `filter`        | string | Expressão de filtro (opcional)            |
+| `selectColumns` | string | Colunas separadas por vírgula (opcional)  |
+| `renameColumns` | string | Mapeamento original:novo (opcional)       |
+| `outputFormat`  | string | `json`, `csv` ou `xml`                    |
 
 ## Sintaxe das transformações
 
