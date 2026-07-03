@@ -1,4 +1,8 @@
-# Transformador de arquivos
+# Transformador de Arquivos
+
+![C#](https://img.shields.io/badge/C%23-239120?style=flat&logo=c-sharp&logoColor=white)
+![ASP.NET Core](https://img.shields.io/badge/ASP.NET_Core-512BD4?style=flat&logo=dotnet&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
 
 API para transformação e conversão de arquivos de dados.
 
@@ -24,65 +28,17 @@ Converta e filtre arquivos CSV, JSON, XML ou XLSX diretamente pelo browser, sem 
 
 ## Stack
 
-- C# / ASP.NET Core
-- ClosedXML (suporte a XLSX)
-- Docker
-- Kubernetes (k8s/)
-- Railway
-- CI/CD via GitHub Actions
+- **C# / ASP.NET Core**
+- **ClosedXML** (suporte a XLSX)
+- **Docker**
+- **Kubernetes** (k8s/)
+- **Railway**
+- **CI/CD** via GitHub Actions
+
+---
 
 ## Como rodar localmente
 
 ```bash
 cd src/DataForge
 dotnet run
-```
-
-Acesse `http://localhost:5207`
-
-## Endpoints
-
-| Método | Rota                    | Descrição                    |
-| ------ | ----------------------- | ---------------------------- |
-| `POST` | `/api/Transform`        | Transforma o arquivo enviado |
-| `GET`  | `/api/Transform/health` | Health check da API          |
-
-### Parâmetros do POST
-
-| Campo           | Tipo   | Descrição                                 |
-| --------------- | ------ | ----------------------------------------- |
-| `file`          | File   | Arquivo CSV, JSON, XML ou XLSX (max 5 MB) |
-| `filter`        | string | Expressão de filtro (opcional)            |
-| `selectColumns` | string | Colunas separadas por vírgula (opcional)  |
-| `renameColumns` | string | Mapeamento original:novo (opcional)       |
-| `outputFormat`  | string | `json`, `csv` ou `xml`                    |
-
-## Sintaxe das transformações
-
-A sintaxe completa também está disponível no modal de ajuda (`?`) dentro da própria interface.
-
-### Filtro
-
-Use operadores de comparação para filtrar linhas por qualquer coluna do arquivo:
-
-| Operador | Exemplo        | Descrição |
-| -------- | -------------- | --------- |
-| `=`      | `status=ativo` | Igual a   |
-| `>`      | `preco>100`    | Maior que |
-| `<`      | `preco<100`    | Menor que |
-
-### Seleção de colunas
-
-Informe os nomes separados por vírgula:
-
-```
-coluna1,coluna2,coluna3
-```
-
-### Renomear colunas
-
-Use o formato `original:novo` separado por vírgula:
-
-```
-nomeOriginal:nomeNovo,campo2:campo2Novo
-```
