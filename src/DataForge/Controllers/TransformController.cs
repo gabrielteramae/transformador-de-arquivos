@@ -30,6 +30,9 @@ public class TransformController : ControllerBase
         if (file == null || file.Length == 0)
             return BadRequest("Nenhum arquivo enviado.");
 
+        if (file.Length > 10 * 1024 * 1024)
+            return BadRequest("Arquivo maior que 10 MB.");
+
         var ext = Path.GetExtension(file.FileName).ToLower();
         if (!AllowedExtensions.Contains(ext))
             return BadRequest($"Tipo de arquivo não suportado: '{ext}'. Use: {string.Join(", ", AllowedExtensions)}");
