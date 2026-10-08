@@ -1,44 +1,73 @@
-# Transformador de Arquivos
+# Transformador de Arquivos — CSV, JSON, XML e XLSX
 
-![C#](https://img.shields.io/badge/C%23-239120?style=flat&logo=c-sharp&logoColor=white)
-![ASP.NET Core](https://img.shields.io/badge/ASP.NET_Core-512BD4?style=flat&logo=dotnet&logoColor=white)
+![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?style=flat&logo=dotnet&logoColor=white)
+![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-512BD4?style=flat&logo=dotnet&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-manifests-326CE5?style=flat&logo=kubernetes&logoColor=white)
 
-API para transformação e conversão de arquivos de dados.
+API ASP.NET Core com uma página estática em `wwwroot`. O `POST /api/transform` lê um arquivo, filtra, escolhe colunas, renomeia e devolve o resultado em JSON, CSV ou XML. A resposta é um JSON (`TransformResponse`), com o conteúdo convertido no campo `Data`. XLSX entra; não sai.
 
-## Demo
+| Checagem | Onde |
+|---|---|
+| Extensão `.csv`, `.json`, `.xml`, `.xlsx` | Controller e `FileTransformService` |
+| Acima de 10 MB | Controller recusa antes do serviço |
+| Acima de 5 MB | Serviço recusa se o stream informar o tamanho |
+| Filtro | Uma expressão `campo operador valor`, com `!=`, `>=`, `<=`, `>`, `<`, `=` |
+| Colunas | `selectColumns` separado por vírgula; `renameColumns` no formato `antigo:novo` |
 
-**[conversor-de-arquivos.up.railway.app](https://conversor-de-arquivos.up.railway.app)**
-
-## Sobre
-
-Converta e filtre arquivos CSV, JSON, XML ou XLSX diretamente pelo browser, sem instalar nada. Todas as transformações são encadeadas em um único request.
-
-## Funcionalidades
-
-- Upload de arquivos CSV, JSON, XML e XLSX (até 5 MB)
-- Filtro de linhas por expressão
-- Seleção de colunas específicas
-- Renomeação de colunas
-- Conversão entre formatos (CSV → JSON, XLSX → XML, etc.)
-- Download do resultado
-- Modal de ajuda com exemplos de sintaxe
-- Rate limiting (10 requests/min por IP)
-- Validação de tipo e tamanho de arquivo no backend
+O controller tem `[EnableRateLimiting("transform")]`, mas o `Program.cs` não registra rate limiter. O pacote Swashbuckle está no csproj e também não é ligado no `Program.cs`.
 
 ## Stack
 
-- **C# / ASP.NET Core**
-- **ClosedXML** (suporte a XLSX)
-- **Docker**
-- **Kubernetes** (k8s/)
-- **Railway**
-- **CI/CD** via GitHub Actions
+- .NET 10 (`net10.0`)
+- ClosedXML 0.105.0 (primeira planilha do XLSX), CsvHelper 33.0.1, Newtonsoft.Json 13.0.3
+- Docker (`mcr.microsoft.com/dotnet/sdk:10.0` e `aspnet:10.0`, porta 8080)
+- Manifests em `k8s/` e workflow em `.github/workflows/dotnet.yml`
+
+## Estrutura
+
+```
+transformador-de-arquivos/
+├── Dockerfile
+├── .github/workflows/dotnet.yml
+├── k8s/                 deployment, service, ingress
+└── src/DataForge/
+    ├── Program.cs
+    ├── DataForge.csproj
+    ├── DataForge.http
+    ├── Controllers/TransformController.cs
+    ├── Models/TransformRequest.cs
+    ├── Services/FileTransformService.cs
+    └── wwwroot/          index.html, css/style.css, js/app.js
+```
+
+`GET /api/transform/health` responde `{ status, timestamp }`. O deployment usa essa rota no readiness e no liveness, na porta 8080. A imagem do manifest é o placeholder `your-dockerhub-user/dataforge:latest`. O ingress aponta para `dataforge.local` e limita o body a 10 MB.
+
+JSON de entrada precisa ser um array de objetos. XML espera elementos filhos da raiz, cada um com subelementos. CSV e XLSX usam a primeira linha como cabeçalho.
+
+`outputFormat`: `csv`, `xml` ou qualquer outro valor (cai em JSON indentado).
+
+## Como rodar
+
+Pré-requisito: [.NET 10 SDK](https://dotnet.microsoft.com/download).
+
+```bash
+git clone https://github.com/gabrielteramae/transformador-de-arquivos.git
+cd transformador-de-arquivos
+dotnet run --project src/DataForge
+```
+
+O perfil `http` escuta em `http://localhost:5207`. O perfil `https` usa `https://localhost:7097` e `http://localhost:5207`. A página estática é a raiz; a API é `POST /api/transform` com `multipart/form-data` (`file`, e os campos opcionais `filter`, `selectColumns`, `renameColumns`, `outputFormat`).
+
+Docker:
+
+```bash
+docker build -t dataforge .
+docker run --rm -p 8080:8080 dataforge
+```
+
+O workflow de CI instala o SDK `8.0.x` e roda `dotnet test`, mas o alvo do projeto é `net10.0` e não há projeto de teste no repositório.
 
 ---
 
-## Como rodar localmente
-
-```bash
-cd src/DataForge
-dotnet run
+© 2026 Gabriel Teramae Chan
